@@ -15,6 +15,7 @@ def load_data():
     one_hot = OneHotEncoder();
     transformer = ColumnTransformer([("one_hot",one_hot,categoical_feature,)],remainder="passthrough")
     transformedx = transformer.fit_transform(data)
+    #print(transformedx)
     np_array = data.values # convert pandas dataframe to numpy array
     x = transformedx[:,:6]
     y = transformedx[:,6]
@@ -53,6 +54,27 @@ for i in range(2):
         countme+=1
 
 plt.show();'''
+
+h_studied = int(input("Hours Studied: "))
+prev_score = int(input("Prev Score: "))
+ex_cur = input("Extra Curricular: ")
+sleep = int(input("Sleep Hours: "))
+samp = int(input("Sample Questions answered: "))
+
+no = 0;
+yes = 0;
+if ex_cur.lower() == "yes":
+    yes = 1
+else:
+    no = 1
+
+x_rand = np.array([[no,yes,h_studied,prev_score,sleep,samp]])
+x_rand_norm = scale.transform(x_rand)
+ypred_rand = sgdr.predict(x_rand_norm)
+print(f"Predicted Performance Index: {ypred_rand[0]}")
+
+
+
 
 
 
